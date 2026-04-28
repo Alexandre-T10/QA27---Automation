@@ -1,4 +1,5 @@
 import time
+from wsgiref.validate import assert_
 
 import data
 import helpers
@@ -26,21 +27,22 @@ class TestUrbanRoutes:
     def setup_method(self):
         self.driver.get(data.URBAN_ROUTES_URL)
         self.page = UrbanRoutesPage(self.driver)
-
-
+        self.page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
 
 
     def test_set_route(self):
-       self.page.enter_locations(data.ADDRESS_FROM, data.ADDRESS_TO)
        assert self.page.get_from_location() == data.ADDRESS_FROM
        assert self.page.get_to_location() == data.ADDRESS_TO
 
 
 
+
     def test_select_plan(self):
-        # Adicionar em S8
-        print("função criada para definir o mapa")
-        pass
+        self.page.click_taxi_option()
+        self.page.click_icon_comfort_selected()
+        assert self.page.is_comfort_icon_active()
+
+
 
     def test_fill_phone_number(self):
         # Adicionar em S8
